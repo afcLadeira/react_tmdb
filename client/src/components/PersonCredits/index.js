@@ -6,7 +6,7 @@ export default function PersonCredits({ credits, type }) {
   let navigate = useNavigate();
 
 
-  if (credits?.cast.length == 0) {
+  if (credits?.cast.length === 0) {
     return null
   }
 

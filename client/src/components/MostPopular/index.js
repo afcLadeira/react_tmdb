@@ -6,7 +6,7 @@ import MySpinner from "../Spinner";
 export default function MostPopular() {
   const url = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}`;
 
-  const { data, error, status, refetch, isFetching } = useQuery(
+  const { data, error, isFetching } = useQuery(
     "movies",
     async () => {
       const { data } = await axios.get(url);
