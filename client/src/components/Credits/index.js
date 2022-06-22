@@ -30,7 +30,7 @@ export default function Credits({ credits }) {
         <h2 style={{textAlign:'center'}}>Cast</h2>
         <div className="m-t-b-50" style={{ display: "flex", gap: 20, flexWrap: "wrap" , justifyContent:'center' }}>
         {credits.cast.map((person) => (
-              <div className="zoom c-pointer" onClick={() => navigate(`/person/${person.id}`)}>
+              <div key={person.credit_id} className="zoom c-pointer" onClick={() => navigate(`/person/${person.id}`)}>
                 <Image
                   src={person.profile_path ? `https://www.themoviedb.org/t/p/w276_and_h350_face/${person.profile_path}` : noImage}
                 ></Image>
@@ -53,10 +53,10 @@ export default function Credits({ credits }) {
             }}
           >
             {Object.keys(groupDepartments).map((c) => (
-              <div>
+              <div key={c}>
                 <h5>{c}</h5>
                 {groupDepartments[c].map((a) => (
-                  <p>
+                  <p key={a.credit_id}>
                     <span>{a.name}</span>
                     <span>({a.job})</span>
                   </p>

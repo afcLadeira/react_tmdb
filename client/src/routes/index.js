@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { FavoritesPage } from "../pages/Favorites";
 import Home from "../pages/Home";
 import Movie from "../pages/Movie";
 import Person from "../pages/Person";
@@ -10,7 +11,7 @@ export default function Router() {
 
     return (
         <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/favorites" element={<FavoritesPage />}></Route>
         <Route path="results" element={<Results />}>
         </Route>
         <Route path="movie" element={<Movie />}>
@@ -22,6 +23,7 @@ export default function Router() {
         <Route path="person" element={<Person />}>
            <Route path=":id" element={<Person />} />
         </Route>
+        <Route path="/" element={<Home />}></Route>
       </Routes>
     )
 }

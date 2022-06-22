@@ -5,6 +5,9 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 import noImage from "../../assets/noImage.png";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../redux"
 
 let pages = { person: "person", movie: "movie", tv: "tvshow" };
 
@@ -12,6 +15,10 @@ let typesColors = { person: "warning", movie: "success", tv: "info" };
 
 export default function MovieCard({ movie }) {
   let navigate = useNavigate();
+
+  const dispatch = useDispatch()
+
+  const { addToFavorites } = bindActionCreators(actionCreators, dispatch)
 
   function onClickDetails(id, media_type) {
     navigate(`/${pages[media_type] ? pages[media_type] : "movie"}/${id}`);
@@ -48,6 +55,12 @@ export default function MovieCard({ movie }) {
           onClick={() => onClickDetails(movie.id, movie.media_type)}
         >
           + details
+        </Button>
+        <Button
+          variant="warning"
+          onClick={() => addToFavorites(movie)}
+        >
+          add to favorites
         </Button>
       </Card.Body>
     </Card>

@@ -24,6 +24,7 @@ export default function PersonCredits({ credits, type }) {
                 }
                 className="zoom"
                 style={{ maxWidth: 100 }}
+                key={item.credit_id}
               >
                 <Image
                   width="100px"
