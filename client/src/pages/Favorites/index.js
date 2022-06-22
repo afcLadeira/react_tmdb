@@ -1,21 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators } from "../../redux"
-
-
-
+import { useSelector } from "react-redux";
+import MovieCard from "../../components/MovieCard";
 
 export function FavoritesPage() {
+  const { favorites } = useSelector((state) => state.favorites);
 
-    const favorites = useSelector((state) => state.favorites)
-
-    const dispatch = useDispatch()
-
-    const { removeFromFavorites } = bindActionCreators(actionCreators, dispatch)
-    console.log("🚀 ~ file: index.js ~ line 15 ~ FavoritesPage ~ removeFromFavorites", removeFromFavorites)
-
-    console.log(favorites)
-
-    return <div>{JSON.stringify(favorites)}</div>
-
+  return (
+    <div>
+      <h1>My Favorites</h1>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 20,
+          justifyContent: "center",
+        }}
+      >
+        {favorites &&
+          favorites.map((item) => (
+            <MovieCard key={item.id} movie={item}></MovieCard>
+          ))}
+      </div>
+    </div>
+  );
 }

@@ -5,9 +5,9 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 import noImage from "../../assets/noImage.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
-import { actionCreators } from "../../redux"
+import { actionCreators } from "../../redux";
 
 let pages = { person: "person", movie: "movie", tv: "tvshow" };
 
@@ -16,9 +16,15 @@ let typesColors = { person: "warning", movie: "success", tv: "info" };
 export default function MovieCard({ movie }) {
   let navigate = useNavigate();
 
-  const dispatch = useDispatch()
+  const { favorites } = useSelector((state) => state.favorites);
 
-  const { addToFavorites } = bindActionCreators(actionCreators, dispatch)
+
+  const dispatch = useDispatch();
+
+  const { addToFavorites, removeFromFavorites } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   function onClickDetails(id, media_type) {
     navigate(`/${pages[media_type] ? pages[media_type] : "movie"}/${id}`);
@@ -50,18 +56,25 @@ export default function MovieCard({ movie }) {
           {movie.media_type === "person" ? movie.name : movie.original_title}
         </Card.Title>
         <Card.Text>{movie.overview}</Card.Text>
+
         <Button
           variant="primary"
           onClick={() => onClickDetails(movie.id, movie.media_type)}
         >
-          + details
+          Details
         </Button>
-        <Button
-          variant="warning"
-          onClick={() => addToFavorites(movie)}
-        >
-          add to favorites
-        </Button>
+        {favorites.find((fav) => fav.id === movie.id) ? (
+          <Button variant="danger" onClick={() => removeFromFavorites(movie)}>
+            - Favorites
+          </Button>
+        ) : (
+          <Button
+            variant="outline-danger"
+            onClick={() => addToFavorites(movie)}
+          >
+            + Favorites
+          </Button>
+        )}
       </Card.Body>
     </Card>
   );

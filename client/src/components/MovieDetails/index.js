@@ -1,7 +1,16 @@
+import Badge from "react-bootstrap/Badge";
 import Image from "react-bootstrap/Image";
+import { useSelector } from "react-redux";
 import { currencyFormatter } from "../../helpers";
 
 export default function MovieDetails({ data }) {
+
+
+  const { favorites } = useSelector((state) => state.favorites);
+
+  const isFavorite = favorites.findIndex(fav => fav.id === data.id) !== -1
+
+
   return (
     <div>
       {data ? (
@@ -42,6 +51,9 @@ export default function MovieDetails({ data }) {
               <p>
                 Rating: {data.vote_average} ({data.vote_count})
               </p>
+              { isFavorite ?
+              <Badge bg="danger" >favorite</Badge> : null
+}
             </div>
           </div>
         </div>

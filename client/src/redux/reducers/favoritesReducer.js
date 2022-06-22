@@ -9,10 +9,7 @@ const reducer = (state = initialState, action) => {
     case "removeFavorite":
       return {
         ...state,
-        favorites: [
-          ...state.items.slice(0, action.payload),
-          ...state.items.slice(action.payload + 1),
-        ],
+        favorites: state.favorites.filter( fav => fav.id !== action.payload.id)
       };
     default:
       return state;
