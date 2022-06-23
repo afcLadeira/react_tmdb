@@ -1,6 +1,7 @@
 import Image from "react-bootstrap/Image";
 import { useNavigate } from "react-router-dom";
 import noImage from '../../assets/noImage.png'
+import { PERSON_ROUTE, PROFILE_URL } from "../../constants";
 
 export default function Credits({ credits }) {
 
@@ -30,12 +31,12 @@ export default function Credits({ credits }) {
         <h2 style={{textAlign:'center'}}>Cast</h2>
         <div className="m-t-b-50" style={{ display: "flex", gap: 20, flexWrap: "wrap" , justifyContent:'center' }}>
         {credits.cast.map((person) => (
-              <div key={person.credit_id} className="zoom c-pointer" onClick={() => navigate(`/person/${person.id}`)}>
+              <div key={person.credit_id} className="zoom c-pointer" onClick={() => navigate(`${PERSON_ROUTE}${person.id}`)}>
                 <Image
-                  src={person.profile_path ? `https://www.themoviedb.org/t/p/w276_and_h350_face/${person.profile_path}` : noImage}
+                  src={person.profile_path ? `${PROFILE_URL}${person.profile_path}` : noImage}
                 ></Image>
                 <p>{person.name}</p>
-                <p>{person.character}</p>
+                <p style={{maxWidth:260}}>{person.character}</p>
               </div>
             ))
          } </div> </div>: null}

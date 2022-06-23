@@ -1,4 +1,5 @@
 import Image from "react-bootstrap/Image";
+import { PROFILE_URL } from "../../constants";
 
 export default function PersonDetails({data}) {
 
@@ -9,7 +10,7 @@ export default function PersonDetails({data}) {
              
     
               <Image
-               src={`https://www.themoviedb.org/t/p/w276_and_h350_face/${data.profile_path}`}
+               src={`${PROFILE_URL}${data.profile_path}`}
               ></Image>
              
               <h1>{data.name}</h1>

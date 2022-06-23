@@ -8,16 +8,12 @@ import noImage from "../../assets/noImage.png";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../redux";
-
-let pages = { person: "person", movie: "movie", tv: "tvshow" };
-
-let typesColors = { person: "warning", movie: "success", tv: "info" };
+import { PAGES, POSTER_URL, PROFILE_URL, TYPESCOLORS } from "../../constants";
 
 export default function MovieCard({ movie }) {
   let navigate = useNavigate();
 
   const { favorites } = useSelector((state) => state.favorites);
-
 
   const dispatch = useDispatch();
 
@@ -27,7 +23,7 @@ export default function MovieCard({ movie }) {
   );
 
   function onClickDetails(id, media_type) {
-    navigate(`/${pages[media_type] ? pages[media_type] : "movie"}/${id}`);
+    navigate(`/${PAGES[media_type] ? PAGES[media_type] : "movie"}/${id}`);
   }
 
   return (
@@ -38,15 +34,15 @@ export default function MovieCard({ movie }) {
           !(movie.profile_path || movie.poster_path)
             ? noImage
             : movie.media_type === "person"
-            ? `https://www.themoviedb.org/t/p/w276_and_h350_face/${movie.profile_path}`
-            : `https://www.themoviedb.org/t/p/w440_and_h660_face/${movie.poster_path}`
+            ? `${PROFILE_URL}${movie.profile_path}`
+            : `${POSTER_URL}${movie.poster_path}`
         }
       />
       <Card.Body>
         <Badge
           bg={
-            typesColors[movie.media_type]
-              ? typesColors[movie.media_type]
+            TYPESCOLORS[movie.media_type]
+              ? TYPESCOLORS[movie.media_type]
               : "secondary"
           }
         >

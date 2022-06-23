@@ -4,6 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import { RESULTS_ROUTE } from "../../constants";
 
 export default function SearchForm() {
   let navigate = useNavigate();
@@ -18,10 +19,12 @@ export default function SearchForm() {
   } = useForm();
 
   function onFormSubmit(data) {
-    reset();
+   
+    //reset();
 
-    navigate(`/results?search=${data.searchText}`, {
-      state: { multi: data.multi },
+
+    navigate(`${RESULTS_ROUTE}${data.searchText}`, {
+      state: { multi: data.multi === "true" ? true : false },
     });
   }
 

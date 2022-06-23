@@ -5,21 +5,92 @@ import axios from "axios";
 import MovieCard from "../../components/MovieCard";
 import MySpinner from "../../components/Spinner";
 import Badge from "react-bootstrap/esm/Badge";
+import { getSearchEndpoint } from "../../constants";
+import { useSearchInfo } from "../../api";
 
 export default function Results() {
+
+  
+  let navigate = useNavigate();
+  
+  const [searchParams] = useSearchParams();
+  
+  const searchString = searchParams.get("search");
+  
+  const { state: params } = useLocation();
+
+  useEffect(() => {
+    
+    if (!searchString || !params) {
+      navigate("/");
+    }
+  }, [searchString, navigate, params]);
+
+  
+
+  const search_url = (!params || params.multi === undefined) ? null : getSearchEndpoint(params.multi, searchString)
+
+  const {isLoading , error , data} = useSearchInfo(search_url , searchString)
+
+
+
+  if (error) {
+    return <p>Error: {JSON.stringify(error)}</p>
+  }
+
+  if (isLoading) {
+    <MySpinner></MySpinner>
+  }
+
+
+  return (
+    <div>
+      {data ? (
+        <div style={{ textAlign: "center" }}>
+          <h3>
+            Total results for <Badge bg="primary">{searchString}</Badge>:{" "}
+            {data.total_results}
+          </h3>
+        </div>
+      ) : null}
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 20,
+          justifyContent: "center",
+        }}
+      >
+        {data &&
+          data.results.map((item) => (
+            <MovieCard key={item.id} movie={item}></MovieCard>
+          ))}
+      </div>
+    </div>
+  );
+}
+
+
+export function ResultsOLD() {
+
+
+  
   const [state, setState] = useState({
     loading: true,
     data: null,
     error: null,
   });
-
+  
   let navigate = useNavigate();
-
+  
   const [searchParams] = useSearchParams();
-
+  
   const searchString = searchParams.get("search");
-
+  
   const { state: params } = useLocation();
+
+
 
   useEffect(() => {
     if (!searchString || !params) {
@@ -28,11 +99,7 @@ export default function Results() {
 
     async function fetchData() {
       const { data } = await axios.get(
-        `https://api.themoviedb.org/3/search/${
-          params.multi === "true" ? "multi" : "movie"
-        }?api_key=${
-          process.env.REACT_APP_TMDB_API_KEY
-        }&language=en-US&query=${searchString}&page=1&include_adult=false`
+        getSearchEndpoint(params.multi, searchString)
       );
 
       setState((prevState) => ({ ...prevState, loading: false, data }));

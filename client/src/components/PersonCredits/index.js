@@ -1,6 +1,7 @@
 import Image from "react-bootstrap/Image";
 import { useNavigate } from "react-router-dom";
 import noImage from '../../assets/noImage.png'
+import { MOVIE_ROUTE, POSTER_URL, TV_ROUTE } from "../../constants";
 
 export default function PersonCredits({ credits, type }) {
   let navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function PersonCredits({ credits, type }) {
               <div
                 onClick={() =>
                   navigate(
-                    `${type === "movie" ? "/movie/" : "/tvshow/"}${item.id}`
+                    `${type === "movie" ? MOVIE_ROUTE : TV_ROUTE}${item.id}`
                   )
                 }
                 className="zoom"
@@ -28,7 +29,7 @@ export default function PersonCredits({ credits, type }) {
               >
                 <Image
                   width="100px"
-                  src={item.poster_path ? `https://www.themoviedb.org/t/p/w440_and_h660_face/${item.poster_path}` : noImage}
+                  src={item.poster_path ? `${POSTER_URL}${item.poster_path}` : noImage}
                 ></Image>
                 <p>{type === "movie" ? item.title : item.original_name}</p>
                 <p>{item.character}</p>

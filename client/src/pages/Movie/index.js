@@ -1,12 +1,55 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useGetMovieCredits, useGetMovieDetails } from "../../api";
 import Credits from "../../components/Credits";
 import MovieDetails from "../../components/MovieDetails";
 import MySpinner from "../../components/Spinner";
+import {
+  getMovieCreditsEndpoint,
+  getMovieDetailsEndpoint,
+} from "../../constants";
 
 export default function Movie() {
   let { id } = useParams();
+
+
+  //DEPENDENT QUERIES
+  const { data, error, isLoading } = useGetMovieDetails(
+    getMovieDetailsEndpoint(id),
+    id
+  );
+
+  const {
+    data: credits,
+    error: error_credits,
+    isLoading: isLoading_credits,
+  } = useGetMovieCredits(getMovieCreditsEndpoint(id), id, data);
+
+
+  if (error) {
+    return <p>Error: {JSON.stringify(error)}</p>;
+  }
+
+  if (isLoading) {
+    return <MySpinner></MySpinner>;
+  }
+
+  return (
+    <>
+      {data && <MovieDetails data={data}></MovieDetails>}
+      {credits && <Credits credits={credits}></Credits>}
+    </>
+  );
+}
+
+
+
+
+//deprecated
+export function MovieOld() {
+  let { id } = useParams();
+
   const [state, setState] = useState({
     loading: true,
     data: null,
@@ -16,13 +59,10 @@ export default function Movie() {
 
   useEffect(() => {
     async function fetchData() {
-      let url = `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
-      let urlCredits = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
+      const { data } = await axios.get(getMovieDetailsEndpoint(id));
 
-      const { data } = await axios.get(url);
-     
-      const { data: credits } = await axios.get(urlCredits);
-     
+      const { data: credits } = await axios.get(getMovieCreditsEndpoint(id));
+
       setState((prevState) => ({
         ...prevState,
         loading: false,

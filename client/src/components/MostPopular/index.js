@@ -1,25 +1,19 @@
-import axios from "axios";
-import { useQuery } from "react-query";
+import { useGetMostPopular } from "../../api";
 import MovieCard from "../../components/MovieCard";
+import { API_MOST_POPULAR } from "../../constants";
 import MySpinner from "../Spinner";
 
 export default function MostPopular() {
+
+
+  const { data , error , isLoading , isError } = useGetMostPopular(API_MOST_POPULAR)
+
   
-  const url = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}`;
-
-  const { data, error, isFetching } = useQuery(
-    "movies",
-    async () => {
-      const { data } = await axios.get(url);
-      return data;
-    }
-  );
-
-  if (error) {
+  if (isError) {
     return <h2>ERROR {JSON.stringify(error)}</h2>;
   }
 
-  if (isFetching) {
+  if (isLoading) {
     return <MySpinner></MySpinner>
   }
 

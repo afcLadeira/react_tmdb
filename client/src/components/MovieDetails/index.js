@@ -1,15 +1,13 @@
 import Badge from "react-bootstrap/Badge";
 import Image from "react-bootstrap/Image";
 import { useSelector } from "react-redux";
+import { POSTER_URL } from "../../constants";
 import { currencyFormatter } from "../../helpers";
 
 export default function MovieDetails({ data }) {
-
-
   const { favorites } = useSelector((state) => state.favorites);
 
-  const isFavorite = favorites.findIndex(fav => fav.id === data.id) !== -1
-
+  const isFavorite = favorites.findIndex((fav) => fav.id === data.id) !== -1;
 
   return (
     <div>
@@ -26,9 +24,7 @@ export default function MovieDetails({ data }) {
           </div>
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
             <div>
-              <Image
-                src={`https://www.themoviedb.org/t/p/w440_and_h660_face/${data.poster_path}`}
-              ></Image>
+              <Image src={`${POSTER_URL}${data.poster_path}`}></Image>
             </div>
             <div style={{ maxWidth: 600 }}>
               <p>
@@ -51,9 +47,7 @@ export default function MovieDetails({ data }) {
               <p>
                 Rating: {data.vote_average} ({data.vote_count})
               </p>
-              { isFavorite ?
-              <Badge bg="danger" >favorite</Badge> : null
-}
+              {isFavorite ? <Badge bg="danger">favorite</Badge> : null}
             </div>
           </div>
         </div>
@@ -61,4 +55,3 @@ export default function MovieDetails({ data }) {
     </div>
   );
 }
-

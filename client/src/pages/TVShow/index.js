@@ -1,11 +1,69 @@
 import axios from "axios";
+import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
+import { useQueries, useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import Credits from "../../components/Credits";
 import MySpinner from "../../components/Spinner";
 import TVShowDetails from "../../components/TVShowDetails";
+import { getTVCreditsEndpoint, getTVDetailsEndpoint } from "../../constants";
+import { axiosFetch, useGetTvDetailsAndCredits } from "../../api";
 
 export default function TVShow() {
+  let { id } = useParams();
+  const queryClient = useQueryClient();
+
+  const [
+    { isLoading, error, data, refetch },
+    {
+      isLoading: isLoadingCredits,
+      error: errorCredits,
+      data: credits,
+      refetch: refetchCredits,
+    },
+  ] = useGetTvDetailsAndCredits(id , getTVDetailsEndpoint(id) , getTVCreditsEndpoint(id)) 
+
+  const runQuery = () => {
+    queryClient.fetchQuery(["tvshow", id], async () => axiosFetch(getTVDetailsEndpoint(id)))
+    queryClient.fetchQuery(["tvshow_credits", id], async () => axiosFetch(getTVCreditsEndpoint(id)))
+  }
+
+  const refreshTv = () => {
+    refetch();
+    refetchCredits();
+  };
+
+  if (isLoading || isLoadingCredits) {
+    return <MySpinner></MySpinner>;
+  }
+
+  if (error || errorCredits) {
+    return <p>ERROR: {JSON.stringify(error)}</p>;
+  }
+
+  return (
+    <>
+      <h6>Not fetching on mount for testing purposes.</h6>
+      <Button onClick={() => runQuery()}>Fetch using queryClient</Button>
+      <Button style={{marginLeft:50}} onClick={() => refreshTv()}>Fetch using refresh</Button>
+      {data && <TVShowDetails data={data}></TVShowDetails>}
+      {credits && <Credits credits={credits}></Credits>}
+    </>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+//deprecated
+
+export function TVShowOLD() {
   let { id } = useParams();
 
   const [state, setState] = useState({
@@ -17,13 +75,10 @@ export default function TVShow() {
 
   useEffect(() => {
     async function fetchData() {
-      let url = `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
-      let urlCredits = `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`;
+      const { data } = await axios.get(getTVDetailsEndpoint(id));
 
-      const { data } = await axios.get(url);
-     
-      const { data: credits } = await axios.get(urlCredits);
-     
+      const { data: credits } = await axios.get(getTVCreditsEndpoint(id));
+
       setState((prevState) => ({
         ...prevState,
         loading: false,

@@ -1,4 +1,5 @@
 import Image from "react-bootstrap/Image";
+import { POSTER_URL } from "../../constants";
 
 export default function TVShowDetails({ data }) {
   return (
@@ -17,7 +18,7 @@ export default function TVShowDetails({ data }) {
           <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
             <div>
               <Image
-                src={`https://www.themoviedb.org/t/p/w440_and_h660_face/${data.poster_path}`}
+                src={`${POSTER_URL}${data.poster_path}`}
               ></Image>
             </div>
             <div style={{ maxWidth: 600 }}>
