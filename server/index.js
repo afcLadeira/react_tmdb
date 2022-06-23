@@ -3,7 +3,7 @@ const express = require("express");
 const path = require('path');
 const cors = require('cors')
 const { logger } = require("./middleware/logger");
-
+const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -15,11 +15,23 @@ const { errorHandler } = require("./middleware/errorHandler");
 app.use(logger)
 
 //cors middleware with whitelisting
-const whiteList = ['http://localhost:3001']
+const allowedOrigins = ['http://localhost:3001' , 'http://localhost:3000']
+
+
+//credentials middleware , before CORS!
+
+const credentials = (req,res,next) => {
+  const origin = req.headers.origin
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Credentials' , true)
+  }
+  next()
+}
+app.use(credentials)
 
 const corsOptions = {
   origin: (origin , callback) => {
-    if (whiteList.indexOf(origin) !== -1 || !origin) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null , true)
     } else {
       callback(new Error('Not allowed by CORS'))
@@ -29,11 +41,15 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
+
 //middleware to get formData
 app.use(express.urlencoded({extended:true}))
 
 //middleware for json
 app.use(express.json())
+
+//middleware for cookies
+app.use(cookieParser())
 
 //serve static files
 app.use(express.static(path.join(__dirname, '/public')))

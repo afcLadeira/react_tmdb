@@ -26,8 +26,6 @@ const handleNewUser = async (req,res) => {
     //for now testing with the users json
 
     const duplicate = usersDB.users.find(person => person.userName == userName)
-    console.log("🚀 ~ file: registerController.js ~ line 29 ~ handleNewUser ~ duplicate", duplicate)
-
     if (duplicate) return res.status(409).json({message:'Username already exists.'})
 
 

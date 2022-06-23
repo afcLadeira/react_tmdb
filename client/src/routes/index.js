@@ -8,6 +8,7 @@ import Movie from "../pages/Movie";
 import Person from "../pages/Person";
 import Register from "../pages/Register";
 import Results from "../pages/Results";
+import SandBox from "../pages/Sandbox";
 import TVShow from "../pages/TVShow";
 
 export default function Router() {
@@ -18,6 +19,7 @@ export default function Router() {
         <Route path="/register" element={<Register />}></Route>
 
         <Route element={<RequireAuth></RequireAuth>}>
+          <Route path="/sandbox" element={<SandBox />}></Route>
           <Route path="/favorites" element={<FavoritesPage />}></Route>
           <Route path="results" element={<Results />}></Route>
           <Route path="movie" element={<Movie />}>

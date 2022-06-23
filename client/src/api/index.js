@@ -8,6 +8,7 @@ export function useGetMostPopular(url) {
       const { data } = await axios.get(url);
       return data;
     },
+    { staleTime: Infinity },
     {
       select: (data) => {
         data.results.sort((a, b) => b.popularity - a.popularity);

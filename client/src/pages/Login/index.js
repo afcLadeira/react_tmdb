@@ -24,7 +24,7 @@ export default function Login() {
 
       console.log(response.data);
       console.log(response.data.user);
-      console.log(response.accessToken);
+      console.log(response.data.user.accessToken);
 
 
       setAuth(response.data.user);
