@@ -1,7 +1,7 @@
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
-import { useQueries, useQueryClient } from "react-query";
+import {  useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
 import Credits from "../../components/Credits";
 import MySpinner from "../../components/Spinner";

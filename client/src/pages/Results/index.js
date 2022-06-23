@@ -27,7 +27,6 @@ export default function Results() {
   }, [searchString, navigate, params]);
 
   
-
   const search_url = (!params || params.multi === undefined) ? null : getSearchEndpoint(params.multi, searchString)
 
   const {isLoading , error , data} = useSearchInfo(search_url , searchString)

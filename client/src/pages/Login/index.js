@@ -13,46 +13,35 @@ export default function Login() {
 
   const onFormSubmit = async (data) => {
 
-    const testObject = {
-      userName: "André",
-      accessToken: "12345",
-    };
 
-    setAuth(testObject);
-    navigate(from, { replace: true });
+    try {
+      const response = await axios.post("/api/login", data, {
+        header: {
+          "Content-Type": "Application/json",
+        },
+        withCredentials: true,
+      });
 
-    return;
+      console.log(response.data);
+      console.log(response.data.user);
+      console.log(response.accessToken);
 
-    // try {
-    //   const response = await axios.post("/login", JSON.stringify(data), {
-    //     header: {
-    //       "Content-Type": "Application/json",
-    //     },
-    //     withCredentials: true,
-    //   });
 
-    //   console.log(response.data);
-    //   console.log(response.accessToken);
+      setAuth(response.data.user);
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.log(error);
 
-    //   const testObject = {
-    //     userName: "André",
-    //     accessToken: "12345",
-    //   };
-
-    //   setAuth(testObject);
-    // } catch (error) {
-    //   console.log(error);
-
-    //   if (!error?.response) {
-    //     console.log("no server response");
-    //   } else if (error.response?.status === 400) {
-    //     console.log("missing username or password");
-    //   } else if (error.response?.status === 401) {
-    //     console.log("Unauthorized");
-    //   } else {
-    //     console.log("login failed");
-    //   }
-    // }
+      if (!error?.response) {
+        console.log("no server response");
+      } else if (error.response?.status === 400) {
+        console.log("missing username or password");
+      } else if (error.response?.status === 401) {
+        console.log("Unauthorized");
+      } else {
+        console.log("login failed");
+      }
+    }
   };
 
   return (

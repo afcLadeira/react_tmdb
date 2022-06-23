@@ -6,7 +6,7 @@ export default function Register() {
     console.log(data);
 
     try {
-      const response = await axios.post("/register", JSON.stringify(data), {
+      const response = await axios.post("/api/register", data, {
         header: {
           "Content-Type": "Application/json",
         },
