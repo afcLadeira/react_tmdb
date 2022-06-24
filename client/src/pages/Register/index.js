@@ -1,11 +1,16 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import RegisterForm from "../../components/FormRegister";
 
 export default function Register() {
+
+    const navigate = useNavigate()
+
   const onFormSubmit = async (data) => {
     console.log(data);
 
     try {
+
       const response = await axios.post("/api/register", data, {
         header: {
           "Content-Type": "Application/json",
@@ -13,8 +18,8 @@ export default function Register() {
         withCredentials: true,
       });
 
-      console.log(response.data);
-      console.log(response.accessToken);
+       navigate('/login')
+
     } catch (error) {
       console.log(error);
 

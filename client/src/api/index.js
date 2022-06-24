@@ -1,20 +1,32 @@
 import axios from "axios";
-import { useQueries, useQuery } from "react-query";
+import { useQueries, useQuery , useInfiniteQuery} from "react-query";
+
+
+const fetchPopular = async (url , pageParam = 1) => {
+    const { data } = await axios.get(url + '&page=' + pageParam);
+    return  { ...data , nextPage : data.total_pages === data.page ? undefined : data.page+1 }
+  };
+  
 
 export function useGetMostPopular(url) {
-  return useQuery(
+  return useInfiniteQuery(
     "movies",
-    async () => {
-      const { data } = await axios.get(url);
-      return data;
-    },
-    { staleTime: Infinity },
+     ({ pageParam = 1}) => fetchPopular(url , pageParam),
     {
-      select: (data) => {
-        data.results.sort((a, b) => b.popularity - a.popularity);
-        return data;
+
+        getNextPageParam: (lastPage, pages) =>  {            
+           return lastPage.nextPage
+        },
+ 
+    
       },
-    }
+    // { staleTime: Infinity },
+    // {
+    //   select: (data) => {
+    //     data.results.sort((a, b) => b.popularity - a.popularity);
+    //     return data;
+    //   },
+    // }
   );
 }
 export function useSearchInfo(url , searchString , multi) {
@@ -35,7 +47,7 @@ export function useSearchInfo(url , searchString , multi) {
 }
 
 export function useGetMovieDetails(url, id) {
-  //useMutation para on demand? ou refetch?
+
 
   return useQuery(["movie", id], async () => {
     const { data } = await axios.get(url);

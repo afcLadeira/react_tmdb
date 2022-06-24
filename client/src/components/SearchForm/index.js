@@ -35,9 +35,8 @@ export default function SearchForm() {
   }
 
   const watchAllFields = watch();
-  console.log("🚀 ~ file: index.js ~ line 35 ~ SearchForm ~ watchAllFields", watchAllFields)
 
-  const debounceValue = useDebouncer(watchAllFields.searchText,watchAllFields.multi , 'tedubfouie' , 'jeopijioejw')
+  const debounceValue = useDebouncer(watchAllFields.searchText,watchAllFields.multi)
 
 
   return (

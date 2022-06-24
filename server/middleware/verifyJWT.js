@@ -6,8 +6,6 @@ const path = require('path')
 const verifyJWT = (req,res,next) => {
 
     const authHeader = req.headers['authorization']
-    console.log("🚀 ~ file: verifyJWT.js ~ line 9 ~ verifyJWT ~ req.headers", req.headers)
-    console.log("🚀 ~ file: verifyJWT.js ~ line 9 ~ verifyJWT ~ authHeader", authHeader)
 
     if (!authHeader) return res.sendStatus(401)
 

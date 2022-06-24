@@ -15,8 +15,6 @@ const handleRefreshToken = async (req, res) => {
     return res.sendStatus(401);
   }
 
-  console.log('cookies.jwt' , cookies.jwt);
-
   const refreshToken = cookies.jwt;
   console.log("🚀 ~ file: refreshController.js ~ line 21 ~ handleRefreshToken ~ refreshToken", refreshToken)
 
@@ -25,13 +23,16 @@ const handleRefreshToken = async (req, res) => {
   );
   console.log("🚀 ~ file: refreshController.js ~ line 26 ~ handleRefreshToken ~ foundUser", foundUser)
 
-  if (!foundUser) return res.sendStatus(403); //forbidden
+  if (!foundUser) { 
+    console.log('NO USER FOUND FOR THIS TOKEN????')
+    return res.sendStatus(403); //forbidden
+  }
 
   //evaluate jwt
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
     if (err || foundUser.userName !== decoded.userName) {
-
+        console.log('REFRESH TOKEN NOT VERIFIED????')
       return res.sendStatus(403); //forbidden
 
     }

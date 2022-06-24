@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import MovieCard from "../../components/MovieCard";
 
 export function FavoritesPage() {
+  
   const { favorites } = useSelector((state) => state.favorites);
 
   return (

@@ -9,7 +9,6 @@ import { getSearchEndpoint } from "../../constants";
 import { useSearchInfo } from "../../api";
 
 export default function SearchResults({searchString , multi}) {
-console.log("🚀 ~ file: index.js ~ line 12 ~ SearchResults ~ multi", multi)
 
 
   

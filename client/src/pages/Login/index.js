@@ -22,12 +22,9 @@ export default function Login() {
         withCredentials: true,
       });
 
-      console.log(response.data);
-      console.log(response.data.user);
-      console.log(response.data.user.accessToken);
-
 
       setAuth(response.data.user);
+
       navigate(from, { replace: true });
     } catch (error) {
       console.log(error);

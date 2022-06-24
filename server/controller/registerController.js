@@ -13,9 +13,6 @@ const handleNewUser = async (req,res) => {
 
 
     const { userName , password } = req.body
-    console.log("🚀 ~ file: registerController.js ~ line 16 ~ handleNewUser ~ password", password)
-    console.log("🚀 ~ file: registerController.js ~ line 16 ~ handleNewUser ~ userName", userName)
-    console.log("🚀 ~ file: registerController.js ~ line 16 ~ handleNewUser ~ req.body", req.body)
 
     
     if (!userName || !password) {
