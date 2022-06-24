@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import { RESULTS_ROUTE } from "../../constants";
+import SearchResults from "../SearchResults";
+import useDebouncer from "../../hooks/useDebouncer";
+
+import windowIcon from '../../assets/window.png'
+import { Image } from "react-bootstrap";
 
 export default function SearchForm() {
   let navigate = useNavigate();
+
 
   const {
     control,
@@ -29,6 +35,10 @@ export default function SearchForm() {
   }
 
   const watchAllFields = watch();
+  console.log("🚀 ~ file: index.js ~ line 35 ~ SearchForm ~ watchAllFields", watchAllFields)
+
+  const debounceValue = useDebouncer(watchAllFields.searchText,watchAllFields.multi , 'tedubfouie' , 'jeopijioejw')
+
 
   return (
     <div style={{ padding: 20 }}>
@@ -56,16 +66,17 @@ export default function SearchForm() {
             </Form.Group>
           )}
         />
+        <div style={{display:'flex' , justifyContent:'space-between'}}>
         <Controller
           control={control}
           name="multi"
-          render={({ field: { onChange, onBlur, value, ref } }) => (
+          render={({ field: { onChange, onBlur, value, ref ,checked} }) => (
             <Form.Group className="mb-3" controlId="muti">
               <Form.Check
                 type="checkbox"
                 label="All media types"
                 ref={ref}
-                value={value}
+                value={checked}
                 onChange={onChange}
                 isInvalid={!!errors.multi}
                 {...register("multi")}
@@ -74,10 +85,15 @@ export default function SearchForm() {
           )}
         />
 
-        <Button variant="primary" type="submit">
-          Search {watchAllFields.multi ? "all media" : "movie"}
+        <Button variant="light" size="sm" type="submit"> <Image width={20} src={windowIcon}></Image>
+         {/* Search {watchAllFields.multi ? "all media" : "movie"} */}
         </Button>
+</div>
+
+
       </Form>
+
+      <SearchResults searchString={debounceValue} multi={watchAllFields.multi}></SearchResults>
     </div>
   );
 }

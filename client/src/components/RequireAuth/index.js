@@ -14,9 +14,9 @@ export default function RequireAuth(){
     return (
         auth?.userName ? <Outlet></Outlet>
         :
-        <Outlet></Outlet>
+        //<Outlet></Outlet>
         //disabled while auth not fully implemented
-        // <Navigate to="/login" state={{ from: location}} replace></Navigate>
+         <Navigate to="/login" state={{ from: location}} replace></Navigate>
     )
 
 }

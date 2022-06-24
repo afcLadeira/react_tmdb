@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "../components/Layout";
+import PersistLogin from "../components/PersistLogin";
 import RequireAuth from "../components/RequireAuth";
 import { FavoritesPage } from "../pages/Favorites";
 import Home from "../pages/Home";
@@ -18,6 +19,7 @@ export default function Router() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
 
+   <Route element={<PersistLogin></PersistLogin>}>
         <Route element={<RequireAuth></RequireAuth>}>
           <Route path="/sandbox" element={<SandBox />}></Route>
           <Route path="/favorites" element={<FavoritesPage />}></Route>
@@ -34,6 +36,7 @@ export default function Router() {
           <Route path="/" element={<Home />}></Route>
         </Route>
       </Route>
+   </Route>
     </Routes>
 
     //   <Routes>

@@ -17,9 +17,9 @@ export function useGetMostPopular(url) {
     }
   );
 }
-export function useSearchInfo(url , searchString) {
+export function useSearchInfo(url , searchString , multi) {
   return useQuery(
-    ["results",searchString] ,
+    ["results",searchString , multi] ,
     async () => {
       const { data } = await axios.get(url);
       return data;

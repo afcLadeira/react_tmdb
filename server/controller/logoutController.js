@@ -40,14 +40,12 @@ const path = require('path')
 
     const otherUsers = usersDB.users.filter(person => person.refreshToken !== foundUser.refreshToken)
     const currentUser = {...foundUser , refreshToken : ''}
-    console.log("🚀 ~ file: logoutController.js ~ line 43 ~ handleLogout ~ otherUsers", otherUsers)
-    console.log("🚀 ~ file: logoutController.js ~ line 44 ~ handleLogout ~ currentUser", currentUser)
 
     try {
     usersDB.setUsers([...otherUsers , currentUser])
 
 
-    console.log('here-------------')
+    
     
     await fsPromises.writeFile(
         path.join(__dirname,'../MOCK_DATA.json'), //overwrites if exists
@@ -55,15 +53,14 @@ const path = require('path')
         )
         //----------------------------------
         
-        console.log('fooo-------------')
+   
 
     res.clearCookie('jwt' , {httpOnly : true , sameSite: 'None', secure: true }) 
-
+        return res.sendStatus(200)
 
     }
     catch(error) {
-    console.log("🚀 ~ file: logoutController.js ~ line 58 ~ handleLogout ~ error", error)
-        
+    return res.sendStatus(500).json({message: error.message})
     }
    
   };

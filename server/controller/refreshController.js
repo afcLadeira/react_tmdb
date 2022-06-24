@@ -42,7 +42,7 @@ const handleRefreshToken = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.json({ accessToken });
+    res.json({ user: {...foundUser , accessToken } });
   });
 };
 

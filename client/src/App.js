@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
 import NavBar from "./components/NavBar";
+import useAuth from "./hooks/useAuth";
 import Router from "./routes";
 
 
@@ -14,10 +15,13 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+
+  const {auth} = useAuth()
+
   return (
     <div>
       <QueryClientProvider client={queryClient}>
-        <NavBar></NavBar>
+       {auth?.userName && <NavBar></NavBar> }
         <Router></Router>
       </QueryClientProvider>
     </div>
