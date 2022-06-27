@@ -1,6 +1,7 @@
 import { useForm , Controller } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { Link } from "react-router-dom";
 
 
 
@@ -58,8 +59,8 @@ export default function LoginForm({onFormSubmit}) {
                   {...register("password", {
                     required: "You must specify a password",
                     minLength: {
-                      value: 8,
-                      message: "Password must have at least 8 characters"
+                      value: 5,
+                      message: "Password must have at least 5 characters"
                     }
                   })}
                 />
@@ -76,6 +77,12 @@ export default function LoginForm({onFormSubmit}) {
             Submit
           </Button>
         </Form>
+        <p>Don't have an account?{" "}
+          <Link to="/register">
+            Sign up
+            </Link>
+          
+          </p>
       </div>
     )
 

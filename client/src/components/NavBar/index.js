@@ -22,14 +22,14 @@ export default function NavBar() {
     <>
       <Navbar
         style={{ height: 60 }}
-        collapseOnSelect
-        expand="lg"
+       // collapseOnSelect
+        //expand="lg"
         bg="light"
         variant="light"
       >
         <Container style={{ width: "100%" }}>
-          <Navbar.Brand href="/">
-            {" "}
+          <Navbar.Brand>
+          <Link to="/">
             <img
               src={logo}
               width="50"
@@ -37,6 +37,7 @@ export default function NavBar() {
               className="d-inline-block align-top"
               alt="home"
             />
+            </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -50,6 +51,11 @@ export default function NavBar() {
                   <NavDropdown.Item href="/favorites">
                     My Favorites
                   </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => navigate("/mylists")}>
+                      My Lists
+                      
+                  </NavDropdown.Item>
+
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={async () => logout()}>
                     Logout

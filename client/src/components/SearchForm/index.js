@@ -10,6 +10,7 @@ import useDebouncer from "../../hooks/useDebouncer";
 
 import windowIcon from '../../assets/window.png'
 import { Image } from "react-bootstrap";
+import { useCreateList } from "../../api/lists";
 
 export default function SearchForm() {
   let navigate = useNavigate();
@@ -23,6 +24,8 @@ export default function SearchForm() {
     watch,
     formState: { errors },
   } = useForm();
+
+  const mutation = useCreateList()
 
   function onFormSubmit(data) {
    

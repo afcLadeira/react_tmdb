@@ -6,7 +6,7 @@ import MovieCard from "../../components/MovieCard";
 import MySpinner from "../../components/Spinner";
 import Badge from "react-bootstrap/esm/Badge";
 import { getSearchEndpoint } from "../../constants";
-import { useSearchInfo } from "../../api";
+import { useSearchInfo } from "../../api/search";
 
 export default function Results() {
 

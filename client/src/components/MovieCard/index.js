@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../redux";
 import { PAGES, POSTER_URL, PROFILE_URL, TYPESCOLORS } from "../../constants";
+import AddMovieToList from "../AddMovieToList";
 
 export default function MovieCard({ movie }) {
   let navigate = useNavigate();
@@ -59,6 +60,7 @@ export default function MovieCard({ movie }) {
         >
           Details
         </Button>
+      <AddMovieToList movie={movie}></AddMovieToList>
         {favorites.find((fav) => fav.id === movie.id) ? (
           <Button variant="danger" onClick={() => removeFromFavorites(movie)}>
             - Favorites

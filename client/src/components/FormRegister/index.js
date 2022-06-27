@@ -62,8 +62,8 @@ export default function RegisterForm({onFormSubmit}) {
                   {...register("password", {
                     required: "You must specify a password",
                     minLength: {
-                      value: 8,
-                      message: "Password must have at least 8 characters"
+                      value: 5,
+                      message: "Password must have at least 5 characters"
                     }
                   })}
                 />

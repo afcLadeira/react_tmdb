@@ -1,5 +1,5 @@
 const usersDB = {
-  users: require("../MOCK_DATA.json"),
+  users: require("../mockdata/MOCK_DATA.json"),
   setUsers: function (data) {
     this.users = data;
   },
@@ -16,15 +16,11 @@ const handleRefreshToken = async (req, res) => {
   }
 
   const refreshToken = cookies.jwt;
-  console.log("🚀 ~ file: refreshController.js ~ line 21 ~ handleRefreshToken ~ refreshToken", refreshToken)
-
   const foundUser = usersDB.users.find(
     (person) => person.refreshToken === refreshToken
   );
-  console.log("🚀 ~ file: refreshController.js ~ line 26 ~ handleRefreshToken ~ foundUser", foundUser)
 
   if (!foundUser) { 
-    console.log('NO USER FOUND FOR THIS TOKEN????')
     return res.sendStatus(403); //forbidden
   }
 
@@ -32,8 +28,7 @@ const handleRefreshToken = async (req, res) => {
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
     if (err || foundUser.userName !== decoded.userName) {
-        console.log('REFRESH TOKEN NOT VERIFIED????')
-      return res.sendStatus(403); //forbidden
+      return res.sendStatus(403);
 
     }
 
@@ -43,7 +38,7 @@ const handleRefreshToken = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.json({ user: {...foundUser , accessToken } });
+    res.json({ user: {id: foundUser.id , userName: foundUser.userName , accessToken } });
   });
 };
 

@@ -8,17 +8,29 @@ import { Provider } from "react-redux";
 import { store } from "../src/redux/store";
 import { AuthProvider } from "./context/AuthProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Routes>
             <Route path="/*" element={<App />}></Route>
           </Routes>  
         </AuthProvider>
+        </QueryClientProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

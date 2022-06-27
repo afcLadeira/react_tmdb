@@ -44,7 +44,10 @@ export const PERSON_ROUTE = "/person/";
 export const MOVIE_ROUTE = "/movie/";
 
 export const TV_ROUTE = "/tvshow/";
+
+export const MYLISTS_ROUTE = "/mylists"
 // END OF ROUTES
+
 
 export const PAGES = { person: "person", movie: "movie", tv: "tvshow" };
 

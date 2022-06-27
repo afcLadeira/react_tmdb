@@ -1,5 +1,5 @@
 const usersDB = {
-    users: require('../MOCK_DATA.json'),
+    users: require('../mockdata/MOCK_DATA.json'),
     setUsers: function (data) {this.users = data}
 
 }
@@ -7,7 +7,7 @@ const usersDB = {
 const bcrypt = require('bcrypt')
 
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
+
 
 
 const fsPromises = require('fs').promises
@@ -33,8 +33,6 @@ const handleLogin = async (req,res) => {
     if (match) {
         //create JWT
         //normal token and refresh token
-        console.log(process.env.ACCESS_TOKEN_SECRET)
-        console.log(process.env.REFRESH_TOKEN_SECRET)
 
         const accessToken = jwt.sign( {
             "userName" : foundUser.userName },
@@ -47,7 +45,6 @@ const handleLogin = async (req,res) => {
             { expiresIn: '1d'}
         )
 
-
         //save refreshtoken to BD
         //json for now
         const otherUsers = usersDB.users.filter(person => person.userName !== foundUser.userName)
@@ -55,12 +52,12 @@ const handleLogin = async (req,res) => {
 
         usersDB.setUsers([...otherUsers , currentUser])
         await fsPromises.writeFile(
-            path.join(__dirname,'../MOCK_DATA.json'), //overwrites if exists
+            path.join(__dirname,'../mockdata/MOCK_DATA.json'),
             JSON.stringify(usersDB.users)
         )
         //----------------------------------
         res.cookie('jwt' , refreshToken, { httpOnly: true , sameSite: 'None', secure: true , maxAge:24 * 60 * 60 * 1000})
-        res.json({success: `User ${userName} is logged in` , user: {...foundUser , accessToken }})
+        res.json({success: `User ${userName} is logged in` , user: {id: foundUser.id , userName:foundUser.userName , accessToken }})
     }
     else {
 

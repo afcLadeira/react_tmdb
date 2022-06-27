@@ -1,5 +1,5 @@
 const usersDB = {
-  users: require("../MOCK_DATA.json"),
+  users: require("../mockdata/MOCK_DATA.json"),
   setUsers: function (data) {
     this.users = data;
   },
@@ -9,7 +9,7 @@ const fsPromises = require("fs").promises;
 const path = require("path");
 
 const handleLogout = async (req, res) => {
-  //ON CLIENT ALSO DELETE accessToken
+  //todo: ON CLIENT ALSO DELETE accessToken if needed
 
   const cookies = req.cookies;
 
@@ -40,7 +40,7 @@ const handleLogout = async (req, res) => {
     usersDB.setUsers([...otherUsers, currentUser]);
 
     await fsPromises.writeFile(
-      path.join(__dirname, "../MOCK_DATA.json"), //overwrites if exists
+      path.join(__dirname, "../mockdata/MOCK_DATA.json"), //overwrites if exists
       JSON.stringify(usersDB.users)
     );
     //----------------------------------

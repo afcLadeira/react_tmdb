@@ -5,14 +5,7 @@ import useAuth from "./hooks/useAuth";
 import Router from "./routes";
 
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-    },
-  },
-});
+
 
 function App() {
 
@@ -20,10 +13,10 @@ function App() {
 
   return (
     <div>
-      <QueryClientProvider client={queryClient}>
+      
        {auth?.userName && <NavBar></NavBar> }
         <Router></Router>
-      </QueryClientProvider>
+    
     </div>
   );
 }

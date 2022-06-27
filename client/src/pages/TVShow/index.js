@@ -7,7 +7,8 @@ import Credits from "../../components/Credits";
 import MySpinner from "../../components/Spinner";
 import TVShowDetails from "../../components/TVShowDetails";
 import { getTVCreditsEndpoint, getTVDetailsEndpoint } from "../../constants";
-import { axiosFetch, useGetTvDetailsAndCredits } from "../../api";
+import { useGetTvDetailsAndCredits } from "../../api/tvshow";
+import { axiosFetch } from "../../api/fetch";
 
 export default function TVShow() {
   let { id } = useParams();

@@ -6,6 +6,7 @@ import { FavoritesPage } from "../pages/Favorites";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Movie from "../pages/Movie";
+import MyLists from "../pages/MyLists";
 import Person from "../pages/Person";
 import Register from "../pages/Register";
 import Results from "../pages/Results";
@@ -23,6 +24,7 @@ export default function Router() {
         <Route element={<RequireAuth></RequireAuth>}>
           <Route path="/sandbox" element={<SandBox />}></Route>
           <Route path="/favorites" element={<FavoritesPage />}></Route>
+          <Route path="/mylists" element={<MyLists />}></Route>
           <Route path="results" element={<Results />}></Route>
           <Route path="movie" element={<Movie />}>
             <Route path=":id" element={<Movie />} />

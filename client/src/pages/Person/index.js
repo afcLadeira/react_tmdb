@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetAllPersonInfo } from "../../api";
+import { useGetAllPersonInfo } from "../../api/person";
 import PersonCredits from "../../components/PersonCredits";
 import PersonDetails from "../../components/PersonDetails";
 import MySpinner from "../../components/Spinner";

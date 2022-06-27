@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetMovieCredits, useGetMovieDetails } from "../../api";
+import { useGetMovieCredits, useGetMovieDetails } from "../../api/movie";
 import Credits from "../../components/Credits";
 import MovieDetails from "../../components/MovieDetails";
 import MySpinner from "../../components/Spinner";

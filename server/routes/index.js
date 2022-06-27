@@ -16,12 +16,12 @@ let logout = require('./logout');
 app.use('/logout', logout);
 
 
+//Protected routes
 app.use(verifyJWT)
-
-let test = require('./test');
-app.use('/test', test);
 
 let users = require('./users');
 app.use('/users', users);
+let lists = require('./lists');
+app.use('/lists', lists);
 
 module.exports = app;

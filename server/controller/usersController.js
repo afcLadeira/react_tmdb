@@ -1,4 +1,4 @@
-var mockData = require('../MOCK_DATA.json')
+var mockData = require('../mockdata/MOCK_DATA.json')
 
 
 const getUsers = async (req, res) => {

@@ -1,4 +1,6 @@
+require('dotenv').config()
 const express = require("express");
+const mongoose = require("mongoose")
 
 const path = require('path');
 const cors = require('cors')
@@ -10,15 +12,19 @@ const app = express();
 
 const routes = require('./routes');
 const { errorHandler } = require("./middleware/errorHandler");
+const connectDB = require('./config/dbConn');
+
+// Connect to MongoDB
+connectDB();
 
 //custom middleware
 app.use(logger)
 
-//cors middleware with whitelisting
-const allowedOrigins = ['http://localhost:3001' , 'http://localhost:3000']
+// //cors middleware with whitelisting
+ const allowedOrigins = ['http://localhost:3001' , 'http://localhost:3000']
 
 
-//credentials middleware , before CORS!
+// //credentials middleware , before CORS!
 
 const credentials = (req,res,next) => {
   const origin = req.headers.origin
@@ -42,6 +48,8 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 
+
+
 //middleware to get formData
 app.use(express.urlencoded({extended:true}))
 
@@ -58,6 +66,8 @@ app.use('/api', routes);
 
 app.use(errorHandler)
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-}); 
+
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+  app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
+});

@@ -7,7 +7,7 @@ export default function Register() {
     const navigate = useNavigate()
 
   const onFormSubmit = async (data) => {
-    console.log(data);
+ 
 
     try {
 

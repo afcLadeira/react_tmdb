@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useGetMostPopular } from "../../api";
+import { useGetMostPopular } from "../../api/popular";
 import MovieCard from "../../components/MovieCard";
 import { API_MOST_POPULAR } from "../../constants";
 import MySpinner from "../Spinner";
@@ -23,10 +23,7 @@ export default function MostPopular() {
         event.target.scrollingElement;
 
       if (!fetching && scrollHeight - scrollTop <= clientHeight * 1.5) {
-        console.log(
-          "should fetch",
-          !fetching && scrollHeight - scrollTop <= clientHeight * 1.5
-        );
+       
 
         fetching = true;
         if (hasNextPage) {
