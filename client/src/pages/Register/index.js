@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "../../components/FormRegister";
+import { Heading1 } from "../../styles";
 
 export default function Register() {
 
@@ -37,7 +38,7 @@ export default function Register() {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <h1>Register</h1>
+      <Heading1>Register</Heading1>
       <RegisterForm onFormSubmit={onFormSubmit}></RegisterForm>
     </div>
   );

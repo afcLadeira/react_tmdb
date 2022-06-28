@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import LoginForm from "../../components/FormLogin";
 
 import useAuth from "../../hooks/useAuth";
+import { Heading1 } from "../../styles";
 
 export default function Login() {
   const { setAuth } = useAuth();
@@ -45,7 +46,7 @@ export default function Login() {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <h1>Login</h1>
+      <Heading1>Login</Heading1>
       <LoginForm onFormSubmit={onFormSubmit}></LoginForm>
     </div>
   );

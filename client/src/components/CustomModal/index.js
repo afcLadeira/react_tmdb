@@ -20,16 +20,18 @@ export default function CustomModal({ modalOpen, toggle, onSelect }) {
     isLoading,
   } = useGetMyLists(`/api/users/${userId}/lists`, userId);
 
-  useEffect(() => {
-    if (modalOpen) {
-      const data = queryClient.getQueryData("mylists");
-      if (!data) {
-        setUserId(auth.id);
-      } else {
-        setData(data);
-      }
-    }
-  }, [userId, auth.id, modalOpen, queryClient]);
+  // useEffect(() => {
+  //   if (modalOpen) {
+
+  //     const data = queryClient.getQueryData("mylists");
+
+  //     if (!data) {
+  //       setUserId(auth.id);
+  //     } else {
+  //       setData(data);
+  //     }
+  //   }
+  // }, [userId, auth.id, modalOpen, queryClient]);
 
   const handleToggle = () => toggle();
 
@@ -48,10 +50,10 @@ export default function CustomModal({ modalOpen, toggle, onSelect }) {
           <div>
             {isLoading && <MySpinner></MySpinner>}
 
-            {data && (
+            {lists && (
               <Form.Select onChange={handleSelect}>
                 <option>Select a list</option>
-                {data.map((item) => (
+                {lists.map((item) => (
                   <option key={item._id} value={item._id}>
                     {item.name}
                   </option>

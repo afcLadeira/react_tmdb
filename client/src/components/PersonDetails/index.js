@@ -1,5 +1,6 @@
 import Image from "react-bootstrap/Image";
 import { PROFILE_URL } from "../../constants";
+import { Heading1 } from "../../styles";
 
 export default function PersonDetails({data}) {
 
@@ -13,7 +14,7 @@ export default function PersonDetails({data}) {
                src={`${PROFILE_URL}${data.profile_path}`}
               ></Image>
              
-              <h1>{data.name}</h1>
+              <Heading1>{data.name}</Heading1>
               <p>Biography: {data.biography}</p>
               <p>Birthday: {data.birthday}</p>
               <p>Place of birth: {data.place_of_birth}</p>

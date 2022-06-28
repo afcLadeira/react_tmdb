@@ -2,6 +2,7 @@ import Image from "react-bootstrap/Image";
 import { useNavigate } from "react-router-dom";
 import noImage from '../../assets/noImage.png'
 import { MOVIE_ROUTE, POSTER_URL, TV_ROUTE } from "../../constants";
+import { CardSmall, Heading1 } from "../../styles";
 
 export default function PersonCredits({ credits, type }) {
   let navigate = useNavigate();
@@ -13,11 +14,11 @@ export default function PersonCredits({ credits, type }) {
 
   return (
     <div>
-      <h1>{type} credits</h1>
+      <Heading1>{type} credits</Heading1>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 20 }}>
         {credits
           ? credits.cast.map((item) => (
-              <div
+              <CardSmall
                 onClick={() =>
                   navigate(
                     `${type === "movie" ? MOVIE_ROUTE : TV_ROUTE}${item.id}`
@@ -33,7 +34,7 @@ export default function PersonCredits({ credits, type }) {
                 ></Image>
                 <p>{type === "movie" ? item.title : item.original_name}</p>
                 <p>{item.character}</p>
-              </div>
+              </CardSmall>
             ))
           : null}
       </div>

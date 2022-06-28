@@ -53,6 +53,7 @@ const updateList = async (req, res) => {
   const result = await list.save();
   res.json(result);
 };
+
 const updateListMovies = async (req, res) => {
   const { id } = req.params;
   const movie = req.body;

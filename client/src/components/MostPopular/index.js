@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { useGetMostPopular } from "../../api/popular";
 import MovieCard from "../../components/MovieCard";
 import { API_MOST_POPULAR } from "../../constants";
+import { Heading2 } from "../../styles";
 import MySpinner from "../Spinner";
 
 export default function MostPopular() {
@@ -42,7 +43,7 @@ export default function MostPopular() {
   }, [fetchNextPage, hasNextPage]);
 
   if (isError) {
-    return <h2>ERROR {JSON.stringify(error)}</h2>;
+    return <Heading2>ERROR {JSON.stringify(error)}</Heading2>;
   }
 
   if (isLoading) {
@@ -51,7 +52,7 @@ export default function MostPopular() {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h2>Most Popular Movies</h2>
+      <Heading2>Most Popular Movies</Heading2>
       <div
         style={{
           display: "flex",

@@ -51,4 +51,4 @@ export const MYLISTS_ROUTE = "/mylists"
 
 export const PAGES = { person: "person", movie: "movie", tv: "tvshow" };
 
-export const TYPESCOLORS = { person: "warning", movie: "success", tv: "info" };
+export const TYPESCOLORS = { person: "#314d63", movie: "#8fb9ab", tv: "#f08976" };

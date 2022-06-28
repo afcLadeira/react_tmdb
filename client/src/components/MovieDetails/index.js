@@ -3,6 +3,7 @@ import Image from "react-bootstrap/Image";
 import { useSelector } from "react-redux";
 import { POSTER_URL } from "../../constants";
 import { currencyFormatter } from "../../helpers";
+import { Heading2 } from "../../styles";
 
 export default function MovieDetails({ data }) {
   const { favorites } = useSelector((state) => state.favorites);
@@ -15,7 +16,7 @@ export default function MovieDetails({ data }) {
         <div style={{ padding: 10 }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div>
-              <h2>{data.title}</h2>
+              <Heading2>{data.title}</Heading2>
               <div>{data.genres.map((g) => g.name).join(", ")}</div>
             </div>
             <div>

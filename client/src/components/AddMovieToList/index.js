@@ -7,6 +7,7 @@ import CustomModal from "../CustomModal";
 
 export default function AddMovieToList({ movie }) {
   const { auth } = useAuth();
+  
   let [modalOpen, setModalOpen, toggle] = useModal();
 
   const { mutate: addMovieToList } = useAddMovieToList();

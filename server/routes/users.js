@@ -11,8 +11,9 @@ app.get('/', usersController.getUsers);
 
 app.get('/:userId/lists', mylistsController.getAllListsFromUser);
 app.post('/:userId/lists', mylistsController.createList);
-app.put('/:userId/lists/:id', mylistsController.updateList);
+//app.put('/:userId/lists/:id', mylistsController.updateList);
 app.delete('/:userId/lists/:id', mylistsController.deleteList);
+
 
 
 

@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import MovieCard from "../../components/MovieCard";
+import { Heading1 } from "../../styles";
 
 export function FavoritesPage() {
   
@@ -7,7 +8,7 @@ export function FavoritesPage() {
 
   return (
     <div>
-      <h1>My Favorites</h1>
+      <Heading1>My Favorites</Heading1>
       <div
         style={{
           display: "flex",

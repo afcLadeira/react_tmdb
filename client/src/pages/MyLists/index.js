@@ -1,16 +1,15 @@
-import { useEffect } from "react";
-import { useCreateList, useDeleteList, useGetMyLists } from "../../api/lists";
-import { MOVIE_ROUTE, MYLISTS_ROUTE, POSTER_URL } from "../../constants";
+import { useDeleteList, useGetMyLists } from "../../api/lists";
+import { MOVIE_ROUTE, POSTER_URL } from "../../constants";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Accordion from "react-bootstrap/Accordion";
-import { Button, Image } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import CreateListForm from "../../components/CreateListForm";
 import MySpinner from "../../components/Spinner";
 import CustomError from "../../components/CustomError";
 import noImage from "../../assets/noImage.png";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { Heading2 } from "../../styles";
 
 export default function MyLists() {
   let navigate = useNavigate();
@@ -45,7 +44,7 @@ export default function MyLists() {
     <div>
       <CreateListForm></CreateListForm>
       <div style={{ padding: 20 }}>
-        <h2>My Lists:</h2>
+        <Heading2>My Lists:</Heading2>
         <Accordion defaultActiveKey="0">
           {data &&
             data.map((list) => (

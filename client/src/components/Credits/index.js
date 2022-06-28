@@ -2,6 +2,7 @@ import Image from "react-bootstrap/Image";
 import { useNavigate } from "react-router-dom";
 import noImage from '../../assets/noImage.png'
 import { PERSON_ROUTE, PROFILE_URL } from "../../constants";
+import { Heading2, PersonPhoto } from "../../styles";
 
 export default function Credits({ credits }) {
 
@@ -28,13 +29,13 @@ export default function Credits({ credits }) {
 
       <div >
       {credits ? <div className="m-t-b-50">
-        <h2 style={{textAlign:'center'}}>Cast</h2>
+        <Heading2 style={{textAlign:'center'}}>Cast</Heading2>
         <div className="m-t-b-50" style={{ display: "flex", gap: 20, flexWrap: "wrap" , justifyContent:'center' }}>
         {credits.cast.map((person) => (
               <div key={person.credit_id} className="zoom c-pointer" onClick={() => navigate(`${PERSON_ROUTE}${person.id}`)}>
-                <Image
+                <PersonPhoto
                   src={person.profile_path ? `${PROFILE_URL}${person.profile_path}` : noImage}
-                ></Image>
+                ></PersonPhoto>
                 <p>{person.name}</p>
                 <p style={{maxWidth:260}}>{person.character}</p>
               </div>
@@ -44,7 +45,7 @@ export default function Credits({ credits }) {
 
       {Object.keys(groupDepartments).length > 0 ? (
         <div className="m-t-b-50" style={{ textAlign: "center" }}>
-          <h2>Technical Crew</h2>
+          <Heading2>Technical Crew</Heading2>
           <div className="m-t-b-50"
             style={{
               display: "flex",

@@ -10,6 +10,9 @@ import { AuthProvider } from "./context/AuthProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 
+import { MyThemeProvider } from "./context/ThemeProvider";
+import { GlobalStyles } from "./styles/globalStyles";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -24,12 +27,15 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <Routes>
-            <Route path="/*" element={<App />}></Route>
-          </Routes>  
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <MyThemeProvider>
+            <GlobalStyles></GlobalStyles>
+            <AuthProvider>
+              <Routes>
+                <Route path="/*" element={<App />}></Route>
+              </Routes>
+            </AuthProvider>
+          </MyThemeProvider>
         </QueryClientProvider>
       </BrowserRouter>
     </Provider>

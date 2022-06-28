@@ -26,12 +26,15 @@ export const useCreateList = () => {
     },
     {
       onSuccess: (data, variables) => {
-        // queryClient.setQueryData(['mylists', { id: variables.id }], data)
-        queryClient.invalidateQueries("mylists");
+        queryClient.setQueryData("mylists", (oldData) => {
+          return [...oldData , data ]
+        })
+        //queryClient.invalidateQueries("mylists");
       },
     }
   );
 };
+
 export const useDeleteList = () => {
   const queryClient = useQueryClient();
   const axiosPrivate = useAxiosPrivate();
@@ -44,7 +47,10 @@ export const useDeleteList = () => {
     },
     {
       onSuccess: (data, variables) => {
-        queryClient.invalidateQueries("mylists");
+        queryClient.setQueryData("mylists", (oldData) => {
+          return oldData.filter(d => d._id !== data._id)
+        })
+        //queryClient.invalidateQueries("mylists");
       },
     }
   );
@@ -60,7 +66,7 @@ export const useAddMovieToList = () => {
       return data;
     },
     {
-      onSuccess: (data, variables , onSuccess) => {
+      onSuccess: (data, variables, onSuccess) => {
         // queryClient.setQueryData(['mylists', { id: variables.id }], data)
         queryClient.invalidateQueries("mylists");
       },

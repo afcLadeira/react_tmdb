@@ -1,5 +1,6 @@
 import Image from "react-bootstrap/Image";
 import { POSTER_URL } from "../../constants";
+import { Heading2 } from "../../styles";
 
 export default function TVShowDetails({ data }) {
   return (
@@ -8,7 +9,7 @@ export default function TVShowDetails({ data }) {
         <div style={{ padding: 10 }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div>
-              <h2>{data.name}</h2>
+              <Heading2>{data.name}</Heading2>
               <div>{data.genres.map((g) => g.name).join(", ")}</div>
             </div>
             <div>

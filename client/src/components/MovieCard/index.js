@@ -1,5 +1,4 @@
 import Card from "react-bootstrap/Card";
-import Badge from "react-bootstrap/Badge";
 
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +9,12 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../redux";
 import { PAGES, POSTER_URL, PROFILE_URL, TYPESCOLORS } from "../../constants";
 import AddMovieToList from "../AddMovieToList";
+import { Ribbon } from "../../styles";
+import { useTheme } from "styled-components";
 
 export default function MovieCard({ movie }) {
   let navigate = useNavigate();
-
+  let theme = useTheme();
   const { favorites } = useSelector((state) => state.favorites);
 
   const dispatch = useDispatch();
@@ -39,20 +40,25 @@ export default function MovieCard({ movie }) {
             : `${POSTER_URL}${movie.poster_path}`
         }
       />
-      <Card.Body>
-        <Badge
-          bg={
+      <Card.Body style={{ backgroundColor: theme.background }}>
+        <Ribbon
+          color={
             TYPESCOLORS[movie.media_type]
               ? TYPESCOLORS[movie.media_type]
-              : "secondary"
+              : "#8fb9ab"
           }
         >
-          {movie.media_type}
-        </Badge>
+          {movie.media_type ? movie.media_type : "movie"}
+        </Ribbon>
+
         <Card.Title>
-          {movie.media_type === "person" ? movie.name : movie.original_title}
+          <p>
+            {movie.media_type === "person" ? movie.name : movie.original_title}
+          </p>
         </Card.Title>
-        <Card.Text>{movie.overview}</Card.Text>
+        <Card.Text>
+          <p>{movie.overview}</p>
+        </Card.Text>
 
         <Button
           variant="primary"
@@ -60,7 +66,7 @@ export default function MovieCard({ movie }) {
         >
           Details
         </Button>
-      <AddMovieToList movie={movie}></AddMovieToList>
+        <AddMovieToList movie={movie}></AddMovieToList>
         {favorites.find((fav) => fav.id === movie.id) ? (
           <Button variant="danger" onClick={() => removeFromFavorites(movie)}>
             - Favorites
