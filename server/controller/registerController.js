@@ -1,7 +1,8 @@
 //mongo
 const User = require("../models/users");
 
-const bcrypt = require("bcrypt");
+//const bcrypt = require("bcrypt");
+const bcrypt = require('bcryptjs');
 
 const handleNewUser = async (req, res) => {
   const { userName, password } = req.body;
@@ -20,7 +21,11 @@ const handleNewUser = async (req, res) => {
 
   try {
     //encrypt the password
-    const hashedPwd = await bcrypt.hash(password, 10);
+    //const hashedPwd = await bcrypt.hash(password, 10);
+
+    //bcryptjs
+    const hashedPwd = bcrypt.hashSync(password, 10);
+
     //store the new user
 
     //MONGO

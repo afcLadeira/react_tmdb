@@ -39,6 +39,11 @@ const handleLogin = async (req,res) => {
     //evaluate password
 
     const match = await bcrypt.compare(password, foundUser.password )
+
+     //bcryptjs
+    
+    //const match = bcrypt.compare(password, foundUser.password);
+
     
     if (match) {
         //create JWT

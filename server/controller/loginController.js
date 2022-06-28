@@ -2,7 +2,8 @@
 const User = require('../models/users');
 
 
-const bcrypt = require('bcrypt')
+//const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs');
 
 const jwt = require('jsonwebtoken')
 
@@ -24,7 +25,10 @@ const handleLogin = async (req,res) => {
 
     //evaluate password
 
-    const match = await bcrypt.compare(password, foundUser.password )
+    //const match = await bcrypt.compare(password, foundUser.password )
+    
+    //bcryptjs
+    const match = bcrypt.compare(password, foundUser.password);
     
     if (match) {
         //create JWT
