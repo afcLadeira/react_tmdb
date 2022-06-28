@@ -26,7 +26,8 @@ connectDB();
 app.use(logger)
 
 // //cors middleware with whitelisting
- const allowedOrigins = ['http://localhost:3001' , 'http://localhost:3000']
+ const allowedOrigins = ['https://react-tmdb-di3a9v178-afcladeira.vercel.app/']
+ //const allowedOrigins = ['http://localhost:3001' , 'http://localhost:3000']
 
 
 // //credentials middleware , before CORS!
