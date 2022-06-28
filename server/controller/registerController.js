@@ -1,8 +1,6 @@
 //mongo
 const User = require("../models/users");
 
-const fsPromises = require("fs").promises;
-const path = require("path");
 const bcrypt = require("bcrypt");
 
 const handleNewUser = async (req, res) => {

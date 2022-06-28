@@ -2,8 +2,6 @@
 const User = require('../models/users');
 
 
-const fsPromises = require("fs").promises;
-const path = require("path");
 
 const handleLogout = async (req, res) => {
   //todo: ON CLIENT ALSO DELETE accessToken if needed
