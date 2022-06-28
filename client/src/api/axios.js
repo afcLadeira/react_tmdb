@@ -1,5 +1,8 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:3001';
+import { HOMEPAGE_URL } from '../constants/homepage';
+
+
+const BASE_URL = process.env.NODE_ENV === 'production' ? HOMEPAGE_URL: 'http://localhost:3001';
 
 export default axios.create({
     baseURL: BASE_URL
