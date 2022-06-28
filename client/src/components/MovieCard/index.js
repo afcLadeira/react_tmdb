@@ -52,12 +52,12 @@ export default function MovieCard({ movie }) {
         </Ribbon>
 
         <Card.Title>
-          <p>
+       
             {movie.media_type === "person" ? movie.name : movie.original_title}
-          </p>
+         
         </Card.Title>
         <Card.Text>
-          <p>{movie.overview}</p>
+          {movie.overview}
         </Card.Text>
 
         <Button

@@ -1,9 +1,6 @@
-const usersDB = {
-  users: require("../mockdata/MOCK_DATA.json"),
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
+//mongo
+const User = require('../models/users');
+
 
 const fsPromises = require("fs").promises;
 const path = require("path");
@@ -19,9 +16,8 @@ const handleLogout = async (req, res) => {
 
   const refreshToken = cookies.jwt;
 
-  const foundUser = usersDB.users.find(
-    (person) => person.refreshToken === refreshToken
-  );
+    //MONGO
+    let foundUser = await User.findOne({ refreshToken: refreshToken }).exec();
 
   if (!foundUser) {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
@@ -29,21 +25,14 @@ const handleLogout = async (req, res) => {
   }
 
   //delete refreshToken in db
-  //json for now
-
-  const otherUsers = usersDB.users.filter(
-    (person) => person.refreshToken !== foundUser.refreshToken
-  );
-  const currentUser = { ...foundUser, refreshToken: "" };
 
   try {
-    usersDB.setUsers([...otherUsers, currentUser]);
 
-    await fsPromises.writeFile(
-      path.join(__dirname, "../mockdata/MOCK_DATA.json"), //overwrites if exists
-      JSON.stringify(usersDB.users)
-    );
-    //----------------------------------
+       // with mongo db
+
+       foundUser.refreshToken = ""
+       const result = await foundUser.save();
+       //------------------------------
 
     res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
     return res.sendStatus(200);

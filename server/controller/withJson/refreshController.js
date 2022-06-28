@@ -1,6 +1,14 @@
 //mongo
 const User = require('../models/users');
+//json
 
+
+const usersDB = {
+  users: require("../mockdata/MOCK_DATA.json"),
+  setUsers: function (data) {
+    this.users = data;
+  },
+};
 
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -15,7 +23,13 @@ const handleRefreshToken = async (req, res) => {
   const refreshToken = cookies.jwt;
 
   //MONGO
-  let foundUser = await User.findOne({ refreshToken: refreshToken }).exec();
+  let foundUserMongo = await User.findOne({ refreshToken: refreshToken }).exec();
+  console.log("🚀 ~ file: loginController.js ~ line 32 ~ handleLogin ~ foundUserMongo", foundUserMongo)
+
+  //JSON
+  const foundUser = usersDB.users.find(
+    (person) => person.refreshToken === refreshToken
+  );
 
   if (!foundUser) { 
     return res.sendStatus(403); //forbidden

@@ -1,6 +1,13 @@
 //mongo
 const User = require('../models/users');
+//json
 
+
+const usersDB = {
+    users: require('../mockdata/MOCK_DATA.json'),
+    setUsers: function (data) {this.users = data}
+
+}
 
 const bcrypt = require('bcrypt')
 
@@ -21,7 +28,11 @@ const handleLogin = async (req,res) => {
     } 
 
     //MONGO
-    let foundUser = await User.findOne({ userName: userName }).exec();
+    let foundUserMongo = await User.findOne({ userName: userName }).exec();
+    console.log("🚀 ~ file: loginController.js ~ line 32 ~ handleLogin ~ foundUserMongo", foundUserMongo)
+
+    //JSON
+    const foundUser = usersDB.users.find(person => person.userName == userName)
 
     if (!foundUser) return res.sendStatus(401) //Unauthorized
 
@@ -44,11 +55,23 @@ const handleLogin = async (req,res) => {
             { expiresIn: '1d'}
         )
 
+        //save refreshtoken to BD
+        //json for now
+        const otherUsers = usersDB.users.filter(person => person.userName !== foundUser.userName)
+        const currentUser = {...foundUser , refreshToken}
+
+        usersDB.setUsers([...otherUsers , currentUser])
+        await fsPromises.writeFile(
+            path.join(__dirname,'../mockdata/MOCK_DATA.json'),
+            JSON.stringify(usersDB.users)
+        )
+        //----------------------------------
 
         // with mongo db
 
-        foundUser.refreshToken = refreshToken
-        const result = await foundUser.save();
+        foundUserMongo.refreshToken = refreshToken
+        const result = await foundUserMongo.save();
+        console.log("🚀 ~ file: loginController.js ~ line 74 ~ handleLogin ~ result", result)
         //------------------------------
 
 

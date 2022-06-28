@@ -1,9 +1,5 @@
-const usersDB = {
-  users: require("../mockdata/MOCK_DATA.json"),
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
+//mongo
+const User = require("../models/users");
 
 const fsPromises = require("fs").promises;
 const path = require("path");
@@ -18,10 +14,9 @@ const handleNewUser = async (req, res) => {
       .json({ message: "Username and password are required." });
   }
 
-  //check for duplicate user names
-  //for now testing with the users json
+  //MONGO
+  let duplicate = await User.findOne({ userName: userName }).exec();
 
-  const duplicate = usersDB.users.find((person) => person.userName == userName);
   if (duplicate)
     return res.status(409).json({ message: "Username already exists." });
 
@@ -29,22 +24,25 @@ const handleNewUser = async (req, res) => {
     //encrypt the password
     const hashedPwd = await bcrypt.hash(password, 10);
     //store the new user
-    const newUser = {
-      id:
-        usersDB.users.length === 0
-          ? 1
-          : usersDB.users[usersDB.users.length - 1].id + 1,
+
+    //MONGO
+
+    let usersCount = await User.countDocuments({});
+
+    const newUserMongo = {
+      id: usersCount === 0 ? 1 : usersCount + 1,
       email: userName + "@fakeemail.com",
       userName: userName,
       password: hashedPwd,
     };
 
-    usersDB.setUsers([...usersDB.users, newUser]);
-
-    await fsPromises.writeFile(
-      path.join(__dirname, "../mockdata/MOCK_DATA.json"),
-      JSON.stringify(usersDB.users)
+    const result = await User.create(newUserMongo);
+    console.log(
+      "🚀 ~ file: registerController.js ~ line 81 ~ handleNewUser ~ result",
+      result
     );
+
+    //------------------------------------
 
     res.status(201).json({ success: `New user ${userName} created` });
   } catch (error) {

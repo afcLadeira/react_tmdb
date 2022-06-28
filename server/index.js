@@ -14,6 +14,11 @@ const routes = require('./routes');
 const { errorHandler } = require("./middleware/errorHandler");
 const connectDB = require('./config/dbConn');
 
+
+const PUBLIC_FOLDER = process.env.NODE_ENV === 'production' ?
+path.join(__dirname, 'public')
+: path.join(__dirname, 'client', 'build');
+
 // Connect to MongoDB
 connectDB();
 
@@ -62,7 +67,15 @@ app.use(cookieParser())
 //serve static files
 app.use(express.static(path.join(__dirname, '/public')))
 
+
 app.use('/api', routes);
+
+app.use('/', express.static(PUBLIC_FOLDER));
+
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(PUBLIC_FOLDER, 'index.html'));
+});
+
 
 app.use(errorHandler)
 

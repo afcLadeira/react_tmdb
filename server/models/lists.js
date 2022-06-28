@@ -21,6 +21,3 @@ const listsSchema = new Schema({
 
 module.exports = mongoose.model('list', listsSchema);
 
-
-
-let testjson = { "name" : "test list" , "description" : "test description" , "userId" : 5 , "movies": []}
