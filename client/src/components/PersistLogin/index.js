@@ -14,7 +14,7 @@ const PersistLogin = () => {
       try {
         await refresh();
       } catch (error) {
-        console.log("verifyRefreshToken ~ error", error);
+       
       } finally {
         setLoading(false);
       }

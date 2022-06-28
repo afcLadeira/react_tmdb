@@ -1,5 +1,6 @@
-import axios from "axios";
+
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
 import LoginForm from "../../components/FormLogin";
 
 import useAuth from "../../hooks/useAuth";
