@@ -1,11 +1,11 @@
-var mockData = require('../mockdata/MOCK_DATA.json')
+//var mockData = require('../mockdata/MOCK_DATA.json')
 
 
 const getUsers = async (req, res) => {
     try {
         
         setTimeout(() => {    
-            res.status(200).json(mockData)
+            res.status(200).json({})
         }, 5000);
      
     } catch (e) {
