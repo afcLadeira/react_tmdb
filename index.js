@@ -16,7 +16,7 @@ const connectDB = require("./server/config/dbConn");
 
 const PUBLIC_FOLDER =
   process.env.NODE_ENV === "production"
-    ? path.join(__dirname, "server", "public")
+    ? path.join(__dirname, "client", "build")
     : path.join(__dirname, "client", "build");
 
 // Connect to MongoDB

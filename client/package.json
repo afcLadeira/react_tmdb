@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "home": "https://react-tmdb-nine.vercel.app/",
+  "homepage": "https://react-tmdb-nine.vercel.app/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
