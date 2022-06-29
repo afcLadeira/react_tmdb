@@ -9,10 +9,12 @@ import SearchResults from "../SearchResults";
 import useDebouncer from "../../hooks/useDebouncer";
 
 import windowIcon from '../../assets/window.png'
-import { Image } from "react-bootstrap";
-import { useCreateList } from "../../api/lists";
+import { Image, InputGroup } from "react-bootstrap";
 
-export default function SearchForm() {
+export default function SearchForm({setShowPopular}) {
+
+  let [clearResults , setClearResults] = useState(false)
+
   let navigate = useNavigate();
 
 
@@ -25,13 +27,9 @@ export default function SearchForm() {
     formState: { errors },
   } = useForm();
 
-  const mutation = useCreateList()
 
   function onFormSubmit(data) {
    
-    //reset();
-
-
     navigate(`${RESULTS_ROUTE}${data.searchText}`, {
       state: { multi: data.multi === "true" ? true : false },
     });
@@ -42,6 +40,17 @@ export default function SearchForm() {
   const debounceValue = useDebouncer(watchAllFields.searchText,watchAllFields.multi)
 
 
+  useEffect(() => {
+
+    if (watchAllFields.searchText) {
+      setShowPopular(false)
+    }
+    else {
+      setShowPopular(true)
+    }
+    
+  } , [setShowPopular, watchAllFields.searchText])
+
   return (
     <div style={{ padding: 20 }}>
       <Form onSubmit={handleSubmit(onFormSubmit)}>
@@ -50,6 +59,7 @@ export default function SearchForm() {
           name="searchText"
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Form.Group className="mb-3" controlId="searchText">
+              <InputGroup>
               <Form.Control
                 feedback="Error"
                 ref={ref}
@@ -62,6 +72,12 @@ export default function SearchForm() {
                   required: "This is required",
                 })}
               />
+               <Button 
+               onClick={() => reset()}
+               variant="outline-secondary" id="button-addon2">
+          Clear
+        </Button>
+        </InputGroup>
               <Form.Control.Feedback type="invalid">
                 {errors.searchText && errors.searchText.message}
               </Form.Control.Feedback>
@@ -91,7 +107,6 @@ export default function SearchForm() {
          {/* Search {watchAllFields.multi ? "all media" : "movie"} */}
         </Button>
 </div>
-
 
       </Form>
 

@@ -1,27 +1,35 @@
-export const addToFavorites = (item) => {
+export const getFavorites = (data) => {
+  return async (dispatch) => {
+    dispatch({
+      type: "getFavorites",
+      payload: data,
+    });
+  };
+};
 
-    return (dispatch) => {
+export const addToFavorites = (item, axiosPrivate) => {
+  return async (dispatch, getState) => {
+    const { data } = await axiosPrivate.post(
+      `/api/favorites/${getState().favorites.userId}`,
+      item
+    );
 
+    dispatch({
+      type: "addFavorite",
+      payload: item,
+    });
+  };
+};
 
-        dispatch({
-            type:"addFavorite",
-            payload: item
-        })
+export const removeFromFavorites = (item, axiosPrivate) => {
+  return async (dispatch, getState) => {
+    const { data } = await axiosPrivate.delete(
+      `/api/favorites/${getState().favorites.userId}/${item.id}`
+    );
 
-    }
-
-}
-
-
-export const removeFromFavorites = (item) => {
-
-    return (dispatch) => {
-
-        dispatch({
-            type:"removeFavorite",
-            payload: item
-        })
-
-    }
-
-}
+    dispatch({
+      type: "removeFavorite",
+      payload: item,
+    });
+  };
+};

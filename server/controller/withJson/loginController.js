@@ -29,7 +29,6 @@ const handleLogin = async (req,res) => {
 
     //MONGO
     let foundUserMongo = await User.findOne({ userName: userName }).exec();
-    console.log("🚀 ~ file: loginController.js ~ line 32 ~ handleLogin ~ foundUserMongo", foundUserMongo)
 
     //JSON
     const foundUser = usersDB.users.find(person => person.userName == userName)
@@ -76,7 +75,6 @@ const handleLogin = async (req,res) => {
 
         foundUserMongo.refreshToken = refreshToken
         const result = await foundUserMongo.save();
-        console.log("🚀 ~ file: loginController.js ~ line 74 ~ handleLogin ~ result", result)
         //------------------------------
 
 

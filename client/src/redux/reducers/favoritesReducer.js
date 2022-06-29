@@ -1,21 +1,27 @@
 let initialState = {
-  favorites: [],
+  userId: null,
+  favoriteMovies: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case "getFavorites":
+      return { ...state, ...action.payload };
     case "addFavorite":
-      return { ...state, favorites: [...state.favorites, action.payload] };
+      return {
+        ...state,
+        favoriteMovies: [...state.favoriteMovies, action.payload],
+      };
     case "removeFavorite":
       return {
         ...state,
-        favorites: state.favorites.filter( fav => fav.id !== action.payload.id)
+        favoriteMovies: state.favoriteMovies.filter(
+          (fav) => fav.id !== action.payload.id
+        ),
       };
     default:
       return state;
   }
 };
 
-
-
-export default reducer
+export default reducer;

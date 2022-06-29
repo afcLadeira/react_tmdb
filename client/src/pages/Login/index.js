@@ -5,11 +5,25 @@ import LoginForm from "../../components/FormLogin";
 
 import useAuth from "../../hooks/useAuth";
 import { Heading1 } from "../../styles";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../redux";
+import { useDispatch } from "react-redux";
+import { flushSync } from "react-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function Login() {
   const { setAuth } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const axiosPrivate = useAxiosPrivate()
+
+  const dispatch = useDispatch();
+
+  const { getFavorites } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   const from = location.state?.from?.pathname || "/";
 
@@ -24,8 +38,17 @@ export default function Login() {
         withCredentials: true,
       });
 
+      flushSync(() => {
+        setAuth(response.data.user);
 
-      setAuth(response.data.user);
+        
+      })
+
+      const userId = response.data.user.id
+      const { data : favorites } = await axiosPrivate.get(`/api/users/${userId}/favorites`)
+
+
+      if (response.data.user) getFavorites(favorites)
 
       navigate(from, { replace: true });
     } catch (error) {

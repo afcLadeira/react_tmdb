@@ -6,9 +6,9 @@ import { currencyFormatter } from "../../helpers";
 import { Heading2 } from "../../styles";
 
 export default function MovieDetails({ data }) {
-  const { favorites } = useSelector((state) => state.favorites);
+  const { favoriteMovies } = useSelector((state) => state.favorites);
 
-  const isFavorite = favorites.findIndex((fav) => fav.id === data.id) !== -1;
+  const isFavorite = favoriteMovies.findIndex((fav) => fav.id === data.id) !== -1;
 
   return (
     <div>

@@ -22,6 +22,9 @@ app.use(verifyJWT)
 let users = require('./users');
 app.use('/users', users);
 
+let favorites = require('./favorites');
+app.use('/favorites', favorites);
+
 let lists = require('./lists');
 app.use('/lists', lists);
 

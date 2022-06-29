@@ -5,9 +5,9 @@ export default function useDebouncer(value,otherValueToWatch) {
     
   const [debounceValue, setDebounceValue] = useState(null);
 
-  const MIN_LENGHT = 3;
+  const MIN_LENGHT = 0;
 
-  const DELAY = 2000;
+  const DELAY = 1000;
 
   useEffect(() => {
     const searchText = value;

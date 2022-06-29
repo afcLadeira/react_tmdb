@@ -1,5 +1,7 @@
 //mongo
 const User = require('../models/users');
+const Favorite = require("../models/favorites");
+
 
 
 const jwt = require("jsonwebtoken");
@@ -23,7 +25,7 @@ const handleRefreshToken = async (req, res) => {
 
   //evaluate jwt
 
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
     if (err || foundUser.userName !== decoded.userName) {
       return res.sendStatus(403);
 
@@ -35,7 +37,15 @@ const handleRefreshToken = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.json({ user: {id: foundUser.id , userName: foundUser.userName , accessToken } });
+    let userFavorites
+      try {
+     userFavorites = await Favorite.findOne({ userId: foundUser.id }).exec();
+      }
+      catch(error) {
+        userFavorites = []
+      }
+
+    res.json({ user: {id: foundUser.id , userName: foundUser.userName , accessToken }, favorites: userFavorites ? userFavorites : { userId: foundUser.id , favoriteMovies :[]} });
   });
 };
 

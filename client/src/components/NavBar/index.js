@@ -58,7 +58,7 @@ export default function NavBar() {
                   id="navbarScrollingDropdown"
                 >
                  
-                  <NavDropdown.Item href="/favorites">
+                 <NavDropdown.Item onClick={() => navigate("/favorites")}>
                     My Favorites
                   </NavDropdown.Item>
                   <NavDropdown.Item onClick={() => navigate("/mylists")}>

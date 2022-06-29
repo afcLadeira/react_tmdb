@@ -11,13 +11,16 @@ import { PAGES, POSTER_URL, PROFILE_URL, TYPESCOLORS } from "../../constants";
 import AddMovieToList from "../AddMovieToList";
 import { Ribbon } from "../../styles";
 import { useTheme } from "styled-components";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function MovieCard({ movie }) {
   let navigate = useNavigate();
   let theme = useTheme();
-  const { favorites } = useSelector((state) => state.favorites);
+  const favorites = useSelector((state) => state.favorites);
+ 
 
   const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate()
 
   const { addToFavorites, removeFromFavorites } = bindActionCreators(
     actionCreators,
@@ -67,14 +70,14 @@ export default function MovieCard({ movie }) {
           Details
         </Button>
         <AddMovieToList movie={movie}></AddMovieToList>
-        {favorites.find((fav) => fav.id === movie.id) ? (
-          <Button variant="danger" onClick={() => removeFromFavorites(movie)}>
+        {favorites && favorites.favoriteMovies.find((fav) => fav.id === movie.id) ? (
+          <Button variant="danger" onClick={() => removeFromFavorites(movie , axiosPrivate)}>
             - Favorites
           </Button>
         ) : (
           <Button
             variant="outline-danger"
-            onClick={() => addToFavorites(movie)}
+            onClick={() => addToFavorites(movie , axiosPrivate)}
           >
             + Favorites
           </Button>

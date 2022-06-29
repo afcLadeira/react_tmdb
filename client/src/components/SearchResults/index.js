@@ -7,8 +7,10 @@ import MySpinner from "../Spinner";
 import Badge from "react-bootstrap/esm/Badge";
 import { getSearchEndpoint } from "../../constants";
 import { useSearchInfo } from "../../api/search";
+import { Heading2 } from "../../styles";
 
 export default function SearchResults({searchString , multi}) {
+console.log("🚀 ~ file: index.js ~ line 12 ~ SearchResults ~ searchString", searchString)
 
 
   
@@ -27,14 +29,18 @@ export default function SearchResults({searchString , multi}) {
   }
 
 
+  if (!searchString) return null
+
+
   return (
     <div>
       {data ? (
         <div style={{ textAlign: "center" }}>
-          <h3>
-            Total results for <Badge bg="primary">{searchString}</Badge>:{" "}
-            {data.total_results}
-          </h3>
+          <Heading2>Search Results</Heading2>
+          <h5>
+          {data.total_results} results for <Badge bg="primary">{searchString}</Badge>
+           
+          </h5>
         </div>
       ) : null}
 

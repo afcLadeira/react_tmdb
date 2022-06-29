@@ -4,7 +4,7 @@ import { Heading1 } from "../../styles";
 
 export function FavoritesPage() {
   
-  const { favorites } = useSelector((state) => state.favorites);
+  const { favoriteMovies } = useSelector((state) => state.favorites);
 
   return (
     <div>
@@ -17,8 +17,8 @@ export function FavoritesPage() {
           justifyContent: "center",
         }}
       >
-        {favorites &&
-          favorites.map((item) => (
+        {favoriteMovies &&
+          favoriteMovies.map((item) => (
             <MovieCard key={item.id} movie={item}></MovieCard>
           ))}
       </div>
