@@ -21,7 +21,11 @@ app.use(verifyJWT)
 
 let users = require('./users');
 app.use('/users', users);
+
 let lists = require('./lists');
 app.use('/lists', lists);
+
+let tmdb = require('./tmdb');
+app.use('/tmdb', tmdb);
 
 module.exports = app;

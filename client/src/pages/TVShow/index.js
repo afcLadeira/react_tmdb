@@ -9,10 +9,13 @@ import TVShowDetails from "../../components/TVShowDetails";
 import { getTVCreditsEndpoint, getTVDetailsEndpoint } from "../../constants";
 import { useGetTvDetailsAndCredits } from "../../api/tvshow";
 import { axiosFetch } from "../../api/fetch";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function TVShow() {
   let { id } = useParams();
   const queryClient = useQueryClient();
+
+  const axiosPrivate = useAxiosPrivate();
 
   const [
     { isLoading, error, data, refetch },
@@ -25,8 +28,8 @@ export default function TVShow() {
   ] = useGetTvDetailsAndCredits(id , getTVDetailsEndpoint(id) , getTVCreditsEndpoint(id)) 
 
   const runQuery = () => {
-    queryClient.fetchQuery(["tvshow", id], async () => axiosFetch(getTVDetailsEndpoint(id)))
-    queryClient.fetchQuery(["tvshow_credits", id], async () => axiosFetch(getTVCreditsEndpoint(id)))
+    queryClient.fetchQuery(["tvshow", id], async () => axiosFetch(getTVDetailsEndpoint(id) , axiosPrivate))
+    queryClient.fetchQuery(["tvshow_credits", id], async () => axiosFetch(getTVCreditsEndpoint(id) , axiosPrivate))
   }
 
   const refreshTv = () => {

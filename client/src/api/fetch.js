@@ -1,7 +1,8 @@
-import axios from "axios";
 
-export const axiosFetch = async (url) => {
-    const { data } = await axios.get(url);
+
+export const axiosFetch = async (url , axiosPrivate) => {
+  
+    const { data } = await axiosPrivate.get(url);
     return data;
   };
   

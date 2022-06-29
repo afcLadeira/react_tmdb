@@ -10,7 +10,6 @@ import MyLists from "../pages/MyLists";
 import Person from "../pages/Person";
 import Register from "../pages/Register";
 import Results from "../pages/Results";
-import SandBox from "../pages/Sandbox";
 import TVShow from "../pages/TVShow";
 
 export default function Router() {
@@ -22,7 +21,6 @@ export default function Router() {
 
    <Route element={<PersistLogin></PersistLogin>}>
         <Route element={<RequireAuth></RequireAuth>}>
-          <Route path="/sandbox" element={<SandBox />}></Route>
           <Route path="/favorites" element={<FavoritesPage />}></Route>
           <Route path="/mylists" element={<MyLists />}></Route>
           <Route path="results" element={<Results />}></Route>

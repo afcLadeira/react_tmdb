@@ -57,7 +57,7 @@ export default function NavBar() {
                   title={<Username>{auth.userName}</Username>}
                   id="navbarScrollingDropdown"
                 >
-                  {/* <NavDropdown.Item href="/sandbox">Sandbox</NavDropdown.Item> */}
+                 
                   <NavDropdown.Item href="/favorites">
                     My Favorites
                   </NavDropdown.Item>
