@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import useAuth from "../hooks/useAuth";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 export function useGetMyLists(url, userId) {
   const axiosPrivate = useAxiosPrivate();
 
   return useQuery(
-    "mylists",
+    [ "mylists" , userId],
     async () => {
       const { data } = await axiosPrivate.get(url);
       return data;
@@ -18,6 +19,8 @@ export const useCreateList = () => {
   const queryClient = useQueryClient();
   const axiosPrivate = useAxiosPrivate();
 
+  const {auth} = useAuth()
+
   return useMutation(
     async ({ url, list }) => {
       if (!url) return [];
@@ -26,7 +29,7 @@ export const useCreateList = () => {
     },
     {
       onSuccess: (data, variables) => {
-        queryClient.setQueryData("mylists", (oldData) => {
+        queryClient.setQueryData(["mylists", auth.id], (oldData) => {
           return [...oldData , data ]
         })
         //queryClient.invalidateQueries("mylists");
@@ -39,6 +42,8 @@ export const useDeleteList = () => {
   const queryClient = useQueryClient();
   const axiosPrivate = useAxiosPrivate();
 
+    const {auth} = useAuth()
+
   return useMutation(
     async (url) => {
       if (!url) return [];
@@ -47,7 +52,7 @@ export const useDeleteList = () => {
     },
     {
       onSuccess: (data, variables) => {
-        queryClient.setQueryData("mylists", (oldData) => {
+        queryClient.setQueryData(["mylists", auth.id], (oldData) => {
           return oldData.filter(d => d._id !== data._id)
         })
         //queryClient.invalidateQueries("mylists");
@@ -58,6 +63,7 @@ export const useDeleteList = () => {
 export const useAddMovieToList = () => {
   const queryClient = useQueryClient();
   const axiosPrivate = useAxiosPrivate();
+  const {auth} = useAuth()
 
   return useMutation(
     async ({ url, movie }) => {
@@ -68,7 +74,7 @@ export const useAddMovieToList = () => {
     {
       onSuccess: (data, variables, onSuccess) => {
         // queryClient.setQueryData(['mylists', { id: variables.id }], data)
-        queryClient.invalidateQueries("mylists");
+        queryClient.invalidateQueries(["mylists", auth.id]);
       },
     }
   );
